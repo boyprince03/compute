@@ -1,7 +1,9 @@
+
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const Database = require('better-sqlite3');
-const db = new Database('./calculator.db');
+const db = new Database(process.env.DB_PATH || './calculator.db');
 const app = express();
 
 app.use(cors());
@@ -69,4 +71,8 @@ app.delete('/api/items/:id', (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(3001, () => console.log('Server on http://localhost:3001'));
+// 讀取 .env 設定的 port，沒有就 3001
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));
+
+

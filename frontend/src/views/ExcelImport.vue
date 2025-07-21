@@ -21,6 +21,7 @@
 <script setup>
 import * as XLSX from 'xlsx'
 import axios from 'axios'
+const apiUrl = import.meta.env.VITE_API_URL;
 import { ref } from 'vue'
 
 const parsedData = ref([])
@@ -45,7 +46,7 @@ function onFileChange(e) {
 
 // 2. 批次查重 API
 async function checkDuplicates(items) {
-  const res = await fetch('http://localhost:3001/api/items/check-duplicates', {
+  const res = await fetch(`${apiUrl}/api/items/check-duplicates`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ items }),
@@ -56,7 +57,7 @@ async function checkDuplicates(items) {
 // 3. 批次上傳
 async function uploadItems(items) {
   for (const item of items) {
-    await axios.post('http://localhost:3001/api/items', {
+    await axios.post(`${apiUrl}/api/items`, {
       department: item.department,
       category: item.category,
       name: item.name,

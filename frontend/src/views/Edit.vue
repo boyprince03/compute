@@ -19,6 +19,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const route = useRoute()
 const router = useRouter()
@@ -34,7 +35,7 @@ onMounted(async () => {
   if (route.params.id) {
     isEdit.value = true
     // 取得單筆資料
-    const { data } = await axios.get(`http://localhost:3001/api/items/${route.params.id}`)
+    const { data } = await axios.get(`${apiUrl}/api/items/${route.params.id}`)
     form.value = data
   }
 })
@@ -42,10 +43,10 @@ onMounted(async () => {
 const handleSubmit = async () => {
   if (isEdit.value) {
     // 更新資料
-    await axios.put(`http://localhost:3001/api/items/${route.params.id}`, form.value)
+    await axios.put(`${apiUrl}/api/items/${route.params.id}`, form.value)
   } else {
     // 新增資料
-    await axios.post('http://localhost:3001/api/items', form.value)
+    await axios.post(`${apiUrl}/api/items`, form.value)
   }
   router.push('/')
 }

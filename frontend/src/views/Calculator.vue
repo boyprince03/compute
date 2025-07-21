@@ -44,6 +44,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 
@@ -76,7 +77,7 @@ const totalAmount = computed(() =>
 )
 
 onMounted(async () => {
-  const res = await axios.get('http://localhost:3001/api/items')
+  const res = await axios.get(`${apiUrl}/api/items`)
   items.value = res.data
 })
 

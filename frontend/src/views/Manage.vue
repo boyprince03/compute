@@ -40,17 +40,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const items = ref([])
 
 async function loadData() {
-  const res = await axios.get('http://localhost:3001/api/items')
+  const res = await axios.get(`${apiUrl}/api/items`)
   items.value = res.data
 }
 
 async function deleteItem(id) {
   if (!confirm('確定要刪除這筆資料嗎？')) return
-  await axios.delete(`http://localhost:3001/api/items/${id}`)
+  await axios.delete(`${apiUrl}/api/items/${id}`)
   loadData()
 }
 
